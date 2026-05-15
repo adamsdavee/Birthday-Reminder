@@ -13,11 +13,15 @@ cron.scheduleJob("*/10 * * * * *", async () => {
    try {
       const users = await User.find()
 
-      console.log(users)
+      const now = new Date()
 
       const celebrants = users.filter((user) => {
          const dob = new Date(user.dateOfBirth)
-         return dob.getMonth() === month && dob.getDate() === day
+
+         return (
+            dob.getUTCMonth() === now.getUTCMonth() &&
+            dob.getUTCDate() === now.getUTCDate()
+         )
       })
 
       for (let user of celebrants) {
