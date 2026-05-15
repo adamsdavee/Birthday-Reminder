@@ -13,6 +13,8 @@ cron.scheduleJob("*/10 * * * * *", async () => {
    try {
       const users = await User.find()
 
+      console.log(users)
+
       const celebrants = users.filter((user) => {
          const dob = new Date(user.dateOfBirth)
          return dob.getMonth() === month && dob.getDate() === day
