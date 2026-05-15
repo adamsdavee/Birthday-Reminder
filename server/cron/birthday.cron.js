@@ -28,14 +28,22 @@ cron.scheduleJob("*/10 * * * * *", async () => {
       console.log("Count:", celebrants.length)
 
       for (let user of celebrants) {
-         await transporter.sendMail({
-            from: process.env.EMAIL_USER,
-            to: user.email,
-            subject: "🎉 Happy Birthday!",
-            html: birthdayTemplate(user.username),
-         })
+         try {
+            console.log("Sending to:", user.email)
 
-         console.log(`Email sent to ${user.email}`)
+            const info = await transporter.sendMail({
+               from: process.env.EMAIL_USER,
+               to: user.email,
+               subject: "🎉 Happy Birthday!",
+               html: birthdayTemplate(user.username),
+            })
+
+            console.log("Email sent:", user.email)
+            console.log("Message ID:", info.messageId)
+         } catch (err) {
+            console.error("EMAIL FAILED:", user.email)
+            console.error(err)
+         }
       }
    } catch (err) {
       console.error("Cron error:", err)
