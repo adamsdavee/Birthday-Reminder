@@ -24,6 +24,9 @@ cron.scheduleJob("*/10 * * * * *", async () => {
          )
       })
 
+      console.log("Celebrants:", celebrants)
+      console.log("Count:", celebrants.length)
+
       for (let user of celebrants) {
          await transporter.sendMail({
             from: process.env.EMAIL_USER,
