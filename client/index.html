@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+   <head>
+      <title>Birthday App</title>
+   </head>
+   <body>
+      <h2>Register Birthday</h2>
+
+      <form id="form">
+         <input type="text" placeholder="Username" id="username" required />
+         <input type="email" placeholder="Email" id="email" required />
+         <input type="date" id="dob" required />
+         <button type="submit">Submit</button>
+      </form>
+
+      <script>
+         document
+            .getElementById("form")
+            .addEventListener("submit", async (e) => {
+               e.preventDefault()
+
+               const data = {
+                  username: document.getElementById("username").value,
+                  email: document.getElementById("email").value,
+                  dateOfBirth: document.getElementById("dob").value,
+               }
+
+               const res = await fetch("http://localhost:5000/api/users", {
+                  method: "POST",
+                  headers: {
+                     "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify(data),
+               })
+
+               const result = await res.json()
+               alert(result.message || "Error")
+            })
+      </script>
+   </body>
+</html>

@@ -1,10 +1,9 @@
 const cron = require("node-schedule")
-const User = require("../models/User")
+const User = require("../models/user.model")
 const transporter = require("../config/mailer")
 const { birthdayTemplate } = require("../utils/emailTemplate")
 
-// runs at 7:00 AM every day
-const birthday_job = cron.schedule("0 7 * * *", async () => {
+cron.scheduleJob("*/10 * * * * *", async () => {
    console.log("Running birthday cron...")
 
    const today = new Date()
@@ -33,5 +32,3 @@ const birthday_job = cron.schedule("0 7 * * *", async () => {
       console.error("Cron error:", err)
    }
 })
-
-module.exports = { birthday_job }
